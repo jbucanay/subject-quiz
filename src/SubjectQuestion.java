@@ -2,11 +2,14 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 
 public class SubjectQuestion extends Subject{
     private String question;
     private String answer;
-    private int[] answerOptions = new int[5];
+    private int[] answerOptions = new int[6];
+
+    private final Scanner scanner = new Scanner(System.in);
 
     public SubjectQuestion(String subjectName) {
         super(subjectName);
@@ -71,27 +74,20 @@ public class SubjectQuestion extends Subject{
      * Presents the answer options to the user by printing them out with
      * corresponding alphabetic labels (A, B, C, D).
      */
-    public void presentAnswerOptions() {
+    public boolean presentAnswerOptions() {
         // Define an array of characters representing the choices
-        char[] choiceAlphabet = {'A', 'B', 'C', 'D'};
+        this.randomizeQuestions();
+        char[] choiceAlphabet = {'a', 'b', 'c', 'd'};
 
         // Loop through each choice in the choiceAlphabet array
         for (int i = 0; i < choiceAlphabet.length; i++) {
             // Print the choice alphabet and the corresponding answer option
             System.out.printf("%s) %s%n", choiceAlphabet[i], this.answerOptions[i]);
         }
-    }
-
-    public int findIndexOfAnswer(int target){
-        System.out.println(Array.get(this.answerOptions, target));
-        System.out.println(this.answer);
-        System.out.println(this.answerOptions[target] == Integer.parseInt(this.answer));
-        for(int index = 0; index < this.answerOptions.length; index++){
-            if(Array.get(this.answerOptions, target).equals(Integer.parseInt(this.answer))){
-                return index;
-            }
-        }
-        return -1;
+        System.out.print("Choice: ");
+        char test = Character.toLowerCase(scanner.next().charAt(0));
+        int indexOfChoice = Utility.findIndex(test, choiceAlphabet);
+        return this.answerOptions[indexOfChoice] == Integer.parseInt(this.answer);
     }
 
     @Override
