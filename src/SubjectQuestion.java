@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class SubjectQuestion extends Subject{
@@ -47,7 +50,7 @@ public class SubjectQuestion extends Subject{
      * Randomizes the order of the questions in the answerOptions array using the
      * Fisher-Yates shuffle algorithm.
      */
-    public void randomizeQuestions() {
+    private void randomizeQuestions() {
         // Create an instance of the Random class to generate random numbers
         Random random = new Random();
 
@@ -79,4 +82,29 @@ public class SubjectQuestion extends Subject{
         }
     }
 
+    public int findIndexOfAnswer(int target){
+        System.out.println(Array.get(this.answerOptions, target));
+        System.out.println(this.answer);
+        System.out.println(this.answerOptions[target] == Integer.parseInt(this.answer));
+        for(int index = 0; index < this.answerOptions.length; index++){
+            if(Array.get(this.answerOptions, target).equals(Integer.parseInt(this.answer))){
+                return index;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SubjectQuestion that)) return false;
+        return Objects.equals(getQuestion(), that.getQuestion()) && Objects.equals(getAnswer(), that.getAnswer()) && Arrays.equals(getAnswerOptions(), that.getAnswerOptions());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(getQuestion(), getAnswer());
+        result = 31 * result + Arrays.hashCode(getAnswerOptions());
+        return result;
+    }
 }
