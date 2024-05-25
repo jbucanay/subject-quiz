@@ -17,20 +17,28 @@ public abstract class User {
         return this.lastname;
     }
 
-    public String getUserName(){
-        return String.format("Welcome %s %s", this.getFirstName(), this.getLastname());
-    }
+    public abstract String getUserName();
 
     public String getUserId() {
         return userId;
     }
 
-    private void createUserId(){
+    /**
+     * Generates a unique user ID and assigns it to the userId field.
+     * User ID format: U followed by 7 random digits.
+     */
+    private void createUserId() {
+        // Initialize a StringBuilder with "U" as the initial content
         StringBuilder idString = new StringBuilder("U");
-        for(int i = 1; i<8;i++) {
+
+        // Loop to generate 7 random digits and append them to idString
+        for (int i = 1; i < 8; i++) {
+            // Generate a random digit between 0 and 9 and append it to idString
             idString.append((int) Math.floor(Math.random() * (9 + 1)));
         }
 
+        // Convert idString to a String and assign it to the userId field
         this.userId = idString.toString();
     }
+
 }
