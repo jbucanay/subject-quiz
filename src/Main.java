@@ -1,15 +1,32 @@
+import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Main {
     public static void main(String[] args){
     //create a student
-        Student student = new Student("Josh", "Manky");
-        SubjectQuestion math1 = new SubjectQuestion("Math");
-        math1.setQuestion("Which of the following is the correct number for 47 thousand, 23.");
-        math1.setAnswer(String.valueOf(47_023));
-        int[] math1Options = {4_723, 47_023, 470_023, 4_702_023 };
-        math1.setAnswerOptions(math1Options);
-        System.out.println(student.getUserName());
-        System.out.println(math1.getQuestion());
-        math1.presentAnswerOptions();
+        SubjectQuestion[] questions = Utility.createSubjectQuestions();
+        System.out.println(Utility.createStudent().getUserName());
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask(){
+            int i = 90;
+            @Override
+            public void run(){
+                if(i>=0){
+                    String time = String.format("%02d:%02d", i /60, i%60);
+                    System.out.print("\r" +time);
+                    i--;
+
+                } else {
+                    timer.cancel();
+                }
+            }
+        };
+
+        timer.scheduleAtFixedRate(task, 0,1000);
+        System.out.println("Time remaining: ");
+        System.out.println(questions[0].getQuestion());
+        System.out.println(questions[0].presentAnswerOptions());
 
 
     }
