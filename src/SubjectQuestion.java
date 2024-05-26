@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class SubjectQuestion extends Subject{
     private String question;
-    private String answer;
+    private int answer;
     private int[] answerOptions = new int[6];
 
     private final Scanner scanner = new Scanner(System.in);
@@ -23,11 +23,11 @@ public class SubjectQuestion extends Subject{
         return this.question;
     }
 
-    public void setAnswer(String answer){
+    public void setAnswer(int answer){
         this.answer = answer;
     }
 
-    public String getAnswer(){
+    public int getAnswer(){
         return this.answer;
     }
 
@@ -82,12 +82,13 @@ public class SubjectQuestion extends Subject{
         // Loop through each choice in the choiceAlphabet array
         for (int i = 0; i < choiceAlphabet.length; i++) {
             // Print the choice alphabet and the corresponding answer option
-            System.out.printf("%s) %s%n", choiceAlphabet[i], this.answerOptions[i]);
+            System.out.printf("%s) %s %n", choiceAlphabet[i], this.answerOptions[i]);
         }
+
         System.out.print("Choice: ");
         char test = Character.toLowerCase(scanner.next().charAt(0));
         int indexOfChoice = Utility.findIndex(test, choiceAlphabet);
-        return this.answerOptions[indexOfChoice] == Integer.parseInt(this.answer);
+        return this.answerOptions[indexOfChoice] == this.answer;
     }
 
     @Override

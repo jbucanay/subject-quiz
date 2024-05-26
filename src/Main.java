@@ -1,33 +1,25 @@
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Main {
     public static void main(String[] args){
     //create a student
-        SubjectQuestion[] questions = Utility.createSubjectQuestions();
+//        Utility.keepTime();
         System.out.println(Utility.createStudent().getUserName());
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask(){
-            int i = 90;
-            @Override
-            public void run(){
-                if(i>=0){
-                    String time = String.format("%02d:%02d", i /60, i%60);
-                    System.out.print("\r" +time);
-                    i--;
+        SubjectQuestion[] questions = Utility.createSubjectQuestions();
+        int i = questions.length -1;
+        int score = 0;
+        while(i >= 0){
+            System.out.println(questions[i].getQuestion());
+            boolean takeQuestion = questions[i].presentAnswerOptions();
 
-                } else {
-                    timer.cancel();
-                }
+            if(takeQuestion){
+                score++;
             }
-        };
-
-        timer.scheduleAtFixedRate(task, 0,1000);
-        System.out.println("Time remaining: ");
-        System.out.println(questions[0].getQuestion());
-        System.out.println(questions[0].presentAnswerOptions());
-
-
+            i--;
+        }
+        System.out.printf("You got %d out of %s questions", score, questions.length);
     }
 }
